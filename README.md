@@ -1,47 +1,142 @@
-# باشگاه شب قهرمانان
+# وب‌سایت باشگاه شب قهرمانان
 
-Next.js 16 application backed exclusively by PostgreSQL. Gym forms create visit requests; a trainer reservation is one trainer, one Gregorian calendar date, and one configured slot.
+وب‌سایت فارسی و راست‌به‌چپ باشگاه شب قهرمانان در کرج. بازدیدکننده می‌تواند امکانات و مربیان باشگاه را ببیند، تور مجازی را باز کند، برای مراجعه حضوری پیش‌ثبت‌نام کند یا یک نوبت مربی خصوصی رزرو کند. مدیر باشگاه از پنل مدیریت، درخواست‌ها و رزروها را پیگیری می‌کند.
 
-## Setup
+## امکانات
 
-1. Use Node.js 20.9+ and PostgreSQL 14+.
-2. Copy `.env.example` to `.env.local` and replace every placeholder.
-3. Run `npm ci`, `npm run db:migrate`, then `npm run dev`.
+- **عضویت و پیش‌ثبت‌نام** — نمایش تعرفه‌های انفرادی و خانوادگی، انتخاب بسته و ثبت درخواست مراجعه با کد پیگیری. ارسال فرم، درخواست مراجعه حضوری ایجاد می‌کند.
+- **رزرو مربی خصوصی** — انتخاب مربی، تاریخ و بازهٔ زمانی، مشاهدهٔ ساعت‌های آزاد و امکان لغو از مرورگری که رزرو را ثبت کرده است.
+- **مجلهٔ فارسی** — فهرست مقالات و صفحهٔ جداگانهٔ هر مقاله. متن مقالات به‌صورت Markdown در مخزن نگهداری می‌شود.
+- **پنل مدیریت** — مشاهده، تغییر وضعیت و حذف رزروها و پیش‌ثبت‌نام‌ها، به‌همراه تنظیمات حساب مدیر.
 
-Required production variables are `DATABASE_URL`, `AUTH_SECRET` (32+ characters), `ADMIN_USERNAME`, and `ADMIN_PASSWORD_HASH`. Set `DATABASE_SSL=require` when verified TLS is required. Set `TRUST_PROXY=true` only when the app is reachable solely through a trusted reverse proxy that overwrites forwarding headers. Generate the password hash with `npm run hash-password -- "strong password"`.
+پروژه از Next.js 16 با App Router، React 19، TypeScript، Tailwind CSS 4 و PostgreSQL استفاده می‌کند. فونت وزیرمتن از فایل‌های داخل پروژه بارگذاری می‌شود. تقویم رابط کاربری شمسی است و API تاریخ را به‌صورت میلادی با قالب `YYYY-MM-DD` دریافت می‌کند. اعتبارسنجی تاریخ طبق زمان تهران انجام می‌شود.
 
-## Database
+## اجرای محلی
 
-`npm run db:migrate` applies ordered SQL files from `migrations/` transactionally and records them in `schema_migrations`. The partial unique index on `(trainer_id, booking_date, slot_key)` for every non-cancelled row is the final double-booking guard.
+### پیش‌نیازها
 
-For a controlled one-time import, first sanitize/export a legacy JSON file outside the repository, then run `npm run db:import-legacy -- C:\path\legacy.json`. Only canonical ISO booking dates are imported; ambiguous Persian display dates and unknown trainers are skipped.
+- Node.js نسخهٔ 20.9 یا بالاتر و npm
+- PostgreSQL نسخهٔ 14 یا بالاتر
+- یک پایگاه دادهٔ محلی، مانند `gym`، با کاربری که اجازهٔ اتصال و ایجاد جدول و ایندکس در آن را دارد
 
-## Verification
+### دریافت پروژه و نصب وابستگی‌ها
 
-Run `npm run architecture:check`, `npm run lint`, `npm run typecheck`, `npm test`, and `npm run build`. For PostgreSQL tests, migrate an empty disposable database and run `npm run test:integration` with its `DATABASE_URL` set.
+```sh
+git clone https://github.com/alirava56/gym_site.git
+cd gym_site
+npm ci
+```
 
-## Production and operations
+در PowerShell فایل تنظیمات محلی را بسازید.
 
-### Admin account and sessions
+```powershell
+Copy-Item .env.example .env.local
+```
 
-Admin sign-in is available at `/admin`. A successful sign-in creates a 30-day
-HttpOnly, SameSite=Lax cookie (Secure in production) backed by a hashed session
-token in PostgreSQL. Closing the panel, refreshing, returning to the website, or
-restarting the application preserves sign-in. Explicit account logout revokes
-the session on the server and clears the cookie. Use HTTPS in production.
+در Bash یا Zsh همان فایل را با `cp .env.example .env.local` بسازید. سپس مقادیر نمونه را در `.env.local` جایگزین کنید. برای ساخت یک مقدار تصادفی برای `AUTH_SECRET` و هش رمز اولیهٔ مدیر از این فرمان‌ها استفاده کنید. عبارت نمونهٔ فرمان دوم را با رمز دلخواه ۱۲ تا ۱۲۸ کاراکتری جایگزین کنید و فقط خروجی هش را در فایل بگذارید.
 
-The **تنظیمات حساب مدیر** section changes the username and/or password after
-verifying the current password. New passwords must contain 12–128 characters.
-Leave both new-password fields empty to change only the username. Changes and
-session rotation are transactional: old sessions are revoked, and this browser
-receives a new session. Passwords are stored as salted scrypt hashes.
+```sh
+node -p "require('node:crypto').randomBytes(32).toString('hex')"
+npm run hash-password -- "replace-with-your-own-password"
+```
 
-`ADMIN_USERNAME` and `ADMIN_PASSWORD_HASH` bootstrap the account once on its first
-login. Subsequent panel edits are stored in `admin_account` and survive restarts;
-changing the environment does not overwrite the existing account. Migrate the
-database before starting the updated application. Admin integration tests run only
-when the database name ends with `_test` and must use a disposable database.
+```sh
+npm run db:migrate
+npm run dev
+```
 
-Recommended topology: Internet → Nginx → one Next.js Node process → PostgreSQL. The in-process rate limiter is intentionally scoped to one application process. Run the built app with `npm run build && npm start`. Health monitoring can call `GET /api/health`.
+صفحهٔ اصلی را در `http://localhost:3000`، پنل را در `http://localhost:3000/admin` و وضعیت اتصال پایگاه داده را در `http://localhost:3000/api/health` باز کنید.
 
-Daily backup: `pg_dump --format=custom --file=backups/gym-YYYY-MM-DD.dump "$DATABASE_URL"`. Restore to an empty database with `pg_restore --clean --if-exists --no-owner --dbname="$DATABASE_URL" backups/gym-YYYY-MM-DD.dump`. Encrypt backups, keep them outside Git, test restores regularly, and retain at least 14 daily copies plus 3 monthly copies.
+### متغیرهای محیطی
+
+| متغیر | کاربرد |
+| --- | --- |
+| `DATABASE_URL` | آدرس اتصال PostgreSQL، مانند `postgresql://gym_app:password@127.0.0.1:5432/gym`. برای اجرای مهاجرت‌ها و قابلیت‌های وابسته به داده لازم است. |
+| `DATABASE_SSL` | اگر پایگاه داده اتصال TLS با اعتبارسنجی گواهی می‌خواهد، مقدار `require` را تنظیم کنید. مقدار نمونه برای اتصال محلی `disable` است. |
+| `AUTH_SECRET` | مقدار تصادفی حداقل ۳۲ کاراکتری که راه‌اندازی نسخهٔ تولید اعتبار آن را بررسی می‌کند. |
+| `ADMIN_USERNAME` | نام کاربری اولیهٔ مدیر. |
+| `ADMIN_PASSWORD_HASH` | هش scrypt رمز اولیهٔ مدیر، به شکل `salt:hash`. در محیط تولید الزامی است. |
+| `ADMIN_PASSWORD` | راه جایگزین برای توسعهٔ محلی. برای استفاده از آن، مقدار نمونهٔ `ADMIN_PASSWORD_HASH` را از فایل حذف کنید. |
+| `TRUST_PROXY` | پیش‌فرض `false` است. فقط وقتی `true` کنید که درخواست‌ها منحصراً از پراکسی مورد اعتماد عبور کنند و آن پراکسی هدرهای انتقال را بازنویسی کند. |
+
+فایل [`.env.example`](.env.example) الگوی تنظیمات است. مقادیر واقعی را در محیط اجرا یا `.env.local` نگه دارید و از افزودن رمزها و فایل‌های پشتیبان به Git خودداری کنید.
+
+## مسیرهای اصلی
+
+| مسیر | کاربرد |
+| --- | --- |
+| `/` | معرفی باشگاه، پلن‌های عضویت، تور مجازی، مربیان، پیش‌ثبت‌نام و رزرو |
+| `/blog` و `/blog/[slug]` | فهرست مقالات و صفحهٔ مقاله |
+| `/admin` | ورود و پنل مدیریت |
+| `/robots.txt` و `/sitemap.xml` | راهنمای خزنده‌ها و نقشهٔ سایت |
+| `GET /api/health` | بررسی اتصال با `SELECT 1`. پاسخ `200` در صورت موفقیت و `503` در صورت اختلال |
+| `GET /api/bookings/availability` | ساعت‌های رزرو با پارامترهای `trainerId` و `date` |
+| `POST /api/bookings` و `DELETE /api/bookings/[id]` | ثبت رزرو و لغو رزرو متعلق به کاربر |
+| `POST /api/subscription` و `DELETE /api/subscription` | ثبت پیش‌ثبت‌نام و لغو درخواست متعلق به کاربر |
+
+اگر دو درخواست هم‌زمان یک ساعت را برای یک مربی انتخاب کنند، ایندکس یکتای PostgreSQL روی مربی، تاریخ و ساعت جلوی ثبت رزرو تکراری را می‌گیرد. درخواست متعارض با کد `409` پاسخ می‌گیرد. رزروهای لغوشده در این محدودیت محاسبه نمی‌شوند.
+
+## حساب مدیر
+
+در نخستین تلاش معتبر از نظر قالب برای ورود به `/admin`، نام کاربری و هش تنظیم‌شده در محیط حساب اولیه را در جدول `admin_account` ایجاد می‌کنند. تغییرات بعدی از بخش **تنظیمات حساب مدیر** در همان جدول ذخیره می‌شوند. مقادیر محیطی برای راه‌اندازی اولیه‌اند و حساب موجود را بازنویسی نمی‌کنند.
+
+نشست مدیر ۳۰ روز اعتبار دارد. مرورگر توکن را در کوکی `HttpOnly` و `SameSite=Lax` نگه می‌دارد و PostgreSQL هش آن را ذخیره می‌کند. در محیط تولید کوکی `Secure` است و ورود به HTTPS نیاز دارد. خروج از حساب، نشست را در سرور باطل می‌کند. تغییر نام کاربری یا رمز به تأیید رمز فعلی نیاز دارد و نشست‌های قبلی را باطل می‌کند. برای تغییر فقط نام کاربری، هر دو فیلد رمز جدید را خالی بگذارید.
+
+## ساختار پروژه
+
+| مسیر | مسئولیت |
+| --- | --- |
+| [`src/app/`](src/app/) | صفحه‌ها، چیدمان، فراداده، نقشهٔ سایت و مسیرهای API |
+| [`src/components/`](src/components/) | اجزای صفحهٔ اصلی، فرم‌ها، تور مجازی، مجله و پنل مدیریت |
+| [`src/shared/`](src/shared/) | اطلاعات باشگاه، فهرست مربیان، تعرفه‌ها و تاریخ شمسی |
+| [`src/server/`](src/server/) | قوانین کسب‌وکار، دسترسی به داده، نشست و محدودیت نرخ درخواست |
+| [`src/lib/blog.ts`](src/lib/blog.ts) و [`content/blog/source/articles/`](content/blog/source/articles/) | تنظیمات و محتوای مقالات |
+| [`public/`](public/) | تصاویر و فایل‌های عمومی |
+| [`migrations/`](migrations/) و [`scripts/`](scripts/) | تغییرات طرح پایگاه داده و ابزارهای توسعه و نگهداری |
+| [`tests/`](tests/) و [`deploy/`](deploy/) | آزمون‌ها و تنظیمات استقرار و پشتیبان‌گیری |
+
+اجزای رابط کاربری برای داده‌های سمت سرور از API استفاده می‌کنند. فرمان `npm run architecture:check` محدودیت وابستگی به لایهٔ [سرور](src/server/README.md) را بررسی می‌کند.
+
+## آزمون و بررسی کیفیت
+
+```sh
+npm run check
+```
+
+این فرمان به‌ترتیب بررسی معماری، ESLint، TypeScript، آزمون‌ها و ساخت نسخهٔ تولید را اجرا می‌کند. پیش از اجرا، متغیرهای الزامی تولید را مطابق جدول بالا تنظیم کنید تا مرحلهٔ ساخت هم تنظیمات لازم را داشته باشد.
+
+برای آزمون یکپارچه، یک پایگاه دادهٔ محلی و قابل حذف بسازید که نام آن به `_test` ختم شود؛ برای نمونه `gym_test`. مقدار `DATABASE_URL` را در خود نشست ترمینال روی آن قرار دهید، چون آزمون‌های PostgreSQL و مدیر وجود این متغیر را هنگام شروع بررسی می‌کنند. رمز نمونه را با رمز کاربر پایگاه دادهٔ آزمایشی جایگزین کنید.
+
+```powershell
+$env:DATABASE_URL = 'postgresql://gym_app:password@127.0.0.1:5432/gym_test'
+npm run db:migrate
+npm run test:integration
+$env:GYM_MEMBERSHIP_DB_TEST = '1'
+npm test
+Remove-Item Env:GYM_MEMBERSHIP_DB_TEST, Env:DATABASE_URL
+```
+
+`test:integration` آزمون‌های PostgreSQL و مدیر را اجرا می‌کند. مرحلهٔ `npm test` با پرچم بالا، آزمون ذخیره و بازیابی بستهٔ عضویت را هم اجرا می‌کند. آزمون عضویت اتصال محلی می‌خواهد. برای این آزمون‌ها از پایگاه دادهٔ تولید استفاده نکنید.
+
+## استقرار و نگهداری
+
+الگوی استقرار پروژه، Nginx با HTTPS در جلوی یک فرایند Node.js و PostgreSQL است. محدودیت نرخ درخواست داخل حافظهٔ همان فرایند اعمال می‌شود. تنظیمات Nginx، سرویس systemd و دستورهای عملیاتی در [راهنمای استقرار](deploy/README.md) آمده‌اند. استقرار خودکار از Git در [تنظیمات Vercel](vercel.json) غیرفعال است.
+
+پس از تنظیم متغیرهای محیط تولید، از ریشهٔ نسخهٔ جدید فرمان‌های زیر را اجرا کنید. اگر سرویس systemd مسئول اجرای برنامه است، فعال‌سازی نسخه را طبق راهنمای استقرار انجام دهید.
+
+```sh
+npm ci
+npm run db:migrate
+npm run build
+npm start -- --hostname 127.0.0.1 --port 3000
+```
+
+مهاجرت‌ها به ترتیب نام فایل اجرا می‌شوند. هر فایل در یک تراکنش اعمال و پس از موفقیت در `schema_migrations` ثبت می‌شود. بعد از فعال‌سازی نسخه، اتصال پایگاه داده را از `/api/health` و ورود مدیر را از مسیر HTTPS بررسی کنید.
+
+برای پشتیبان‌گیری خودکار روی سرور، تنظیمات [سرویس](deploy/gym-backup.service) و [تایمر](deploy/gym-backup.timer) در مخزن قرار دارند. از داده‌ها پیش از مهاجرت نسخهٔ پشتیبان بگیرید، نسخه‌های رمزگذاری‌شده را خارج از Git نگه دارید و بازیابی را ابتدا روی یک پایگاه دادهٔ جداگانه امتحان کنید.
+
+برای انتقال یک‌بارهٔ رزروهای قدیمی، پس از مهاجرت‌ها `DATABASE_URL` را در محیط ترمینال تنظیم و فایل JSON پالایش‌شده را خارج از مخزن نگهداری کنید. ابزار انتقال فقط رکوردهای بخش `bookings` را می‌خواند و مربیان ناشناخته، تاریخ‌های خارج از قالب میلادی `YYYY-MM-DD` و ساعت‌های خارج از قالب مورد انتظار را کنار می‌گذارد.
+
+```powershell
+npm run db:import-legacy -- 'C:\path\legacy.json'
+```
