@@ -1,0 +1,116 @@
+{
+  "photos": [
+    {
+      "file": "gym-lobby-v4.webp",
+      "category": "لابی",
+      "title": "لابی و فضای انتظار",
+      "shortTitle": "لابی",
+      "description": "فضای انتظار باشگاه در کنار ورودی",
+      "alt": "مبل‌های روشن لابی، میز پذیرایی، دیوار سبز و راه‌پلهٔ ورودی",
+      "width": 1134,
+      "height": 638,
+      "equipment": []
+    },
+    {
+      "file": "gym-strength-panorama-v4.webp",
+      "category": "سالن بدنسازی",
+      "title": "دستگاه‌های قدرتی – نمای اول",
+      "shortTitle": "نمای اول",
+      "description": "نمای باز سالن تمرین از کنار دیوار آینه‌ای",
+      "alt": "نمای عریض سالن بدنسازی با ردیف دستگاه‌ها و انعکاس نورهای سقف در آینهٔ سرتاسری",
+      "width": 1338,
+      "height": 541,
+      "equipment": [
+        { "id": "dumbbell-rack", "name": "رک دمبل", "group": "free-weights", "x": 54.6, "y": 75.9, "description": "رک دمبل در کنار آینهٔ سالن." },
+        { "id": "biceps-curl", "name": "دستگاه جلو بازو", "group": "strength", "x": 21.5, "y": 67.4, "description": "دستگاه نشسته برای تمرین جلو بازو." },
+        { "id": "preacher-curl", "name": "دستگاه جلو بازو لاری", "group": "strength", "x": 41.8, "y": 75.3, "description": "تکیه‌گاه شیب‌دار برای اجرای جلو بازو لاری." }
+      ]
+    },
+    {
+      "file": "gym-strength-02-v5.webp",
+      "category": "سالن بدنسازی",
+      "title": "دستگاه‌های قدرتی – نمای دوم",
+      "shortTitle": "نمای دوم",
+      "alt": "نمای عمودی راهروی سالن بدنسازی با دستگاه سیم‌کش و نیمکت شیب‌دار",
+      "width": 964,
+      "height": 1103,
+      "equipment": [
+        { "id": "cable-machine", "name": "دستگاه سیم‌کش", "group": "strength", "x": 76.5, "y": 59, "description": "ایستگاه سیم‌کش با دستگیرهٔ کابلی." },
+        { "id": "pec-fly", "name": "دستگاه فلای", "group": "strength", "x": 53, "y": 55.5, "description": "دستگاه فلای برای تمرین عضلات سینه." },
+        { "id": "shoulder-press", "name": "دستگاه پرس سرشانه", "group": "strength", "x": 92.5, "y": 55.5, "description": "دستگاه نشسته برای پرس سرشانه." },
+        { "id": "incline-bench", "name": "نیمکت شیب‌دار", "group": "free-weights", "x": 38.5, "y": 61.2, "description": "نیمکت تمرین با پشتی شیب‌دار." }
+      ]
+    },
+    {
+      "file": "gym-strength-03-v3.webp",
+      "category": "سالن بدنسازی",
+      "title": "دستگاه‌های قدرتی – نمای سوم",
+      "shortTitle": "نمای سوم",
+      "description": "نمای عریض بخش وزنهٔ آزاد و دستگاه‌های قدرتی سالن",
+      "alt": "نمای عریض سالن بدنسازی با رک هالتر در سمت چپ و دستگاه‌های قدرتی در سمت راست",
+      "width": 1338,
+      "height": 541,
+      "equipment": [
+        { "id": "barbell-free-weights", "name": "هالتر و وزنه آزاد", "group": "free-weights", "x": 19, "y": 81.6, "description": "هالتر و وزنه‌های آزاد در بخش تمرین قدرتی." },
+        { "id": "smith-machine", "name": "هالتر اسمیت", "group": "strength", "x": 32.5, "y": 63.8, "description": "هالتر با مسیر حرکت هدایت‌شده روی ریل." },
+        { "id": "lying-triceps", "name": "دستگاه پشت بازو خوابیده", "group": "strength", "x": 77, "y": 78.8, "description": "دستگاه تمرین عضلات پشت بازو در حالت خوابیده." },
+        { "id": "leg-press", "name": "دستگاه پرس پا", "group": "strength", "x": 49.7, "y": 64.5, "description": "دستگاه تمرین پایین‌تنه با فشار دادن صفحه با پاها." },
+        { "id": "hack-squat", "name": "دستگاه هاک پا", "group": "strength", "x": 59.9, "y": 60.8, "description": "دستگاه اجرای اسکوات هاک در مسیر هدایت‌شده." },
+        { "id": "standing-leg-curl", "name": "دستگاه پشت پا ایستاده", "group": "strength", "x": 37.7, "y": 65.5, "description": "دستگاه تمرین عضلات پشت ران در حالت ایستاده." }
+      ]
+    },
+    {
+      "file": "gym-cardio-recreation-v2.webp",
+      "category": "هوازی و امکانات",
+      "title": "سالن هوازی و تفریحی",
+      "shortTitle": "هوازی و تفریحی",
+      "alt": "نمای عریض سالن با ردیف تردمیل و دوچرخه در یک سو و فوتبال‌دستی، بیلیارد و بوفه در سوی دیگر",
+      "width": 1280,
+      "height": 505,
+      "equipment": [
+        { "id": "foosball", "name": "فوتبال‌دستی", "group": "recreation", "x": 75.5, "y": 78, "description": "میز فوتبال‌دستی در فضای تفریحی باشگاه." },
+        { "id": "cardio-machines", "name": "دستگاه‌های هوازی آمریکایی", "group": "cardio", "x": 19, "y": 66, "description": "ردیف دستگاه‌های تمرین هوازی سالن." },
+        { "id": "pool-table", "name": "میز بیلیارد ۸", "group": "recreation", "x": 83, "y": 65, "description": "میز بیلیارد ۸ در بخش تفریحی سالن." },
+        { "id": "buffet", "name": "بوفه", "group": "recreation", "x": 67.5, "y": 57, "description": "پیشخوان بوفه در کنار فضای تفریحی." }
+      ]
+    },
+    {
+      "file": "gym-restroom-v2.webp",
+      "category": "امکانات",
+      "title": "سرویس بهداشتی",
+      "shortTitle": "سرویس بهداشتی",
+      "alt": "ورودی سرویس بهداشتی باشگاه با روشویی‌های زرد در مرکز و درهای کابین‌ها در دو طرف",
+      "width": 960,
+      "height": 1280,
+      "equipment": []
+    },
+    {
+      "file": "gym-locker-room-v4.webp",
+      "category": "امکانات",
+      "title": "رختکن",
+      "shortTitle": "رختکن",
+      "alt": "رختکن باشگاه با ردیف کمدهای خاکستری، نیمکت و فضای آویختن لباس",
+      "width": 1230,
+      "height": 692,
+      "equipment": []
+    },
+    {
+      "file": "gym-showers-and-basin.webp",
+      "category": "امکانات",
+      "title": "دوش و حوضچه",
+      "shortTitle": "دوش و حوضچه",
+      "alt": "کابین‌های شیشه‌ای دوش در کنار حوضچهٔ کاشی‌کاری‌شده با جریان آب از سقف",
+      "width": 1280,
+      "height": 563,
+      "equipment": []
+    }
+  ],
+  "additionalEquipment": [
+    { "name": "هالتر و وزنه آزاد", "group": "free-weights" },
+    { "name": "هالتر اسمیت", "group": "strength" },
+    { "name": "دستگاه پشت بازو خوابیده", "group": "strength" },
+    { "name": "دستگاه پرس پا", "group": "strength" },
+    { "name": "دستگاه هاک پا", "group": "strength" },
+    { "name": "دستگاه پشت پا ایستاده", "group": "strength" }
+  ]
+}

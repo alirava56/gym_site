@@ -1,0 +1,45 @@
+{
+  "release": "/srv/gym/releases/20261101T220238Z-blog-intro",
+  "previous": "/srv/gym/releases/20261101T214835Z-blog-intro",
+  "purpose": "Fix admin scroll and registration visibility",
+  "activated_utc": "2026-11-01T22:03:32.083994+00:00",
+  "files": {
+    "src/app/globals.css": "9f0ef090be06cb8fe5c58c9095a27e823774626634358cd21d9af75ebedbe177",
+    "src/app/layout.tsx": "b1c66639934db1713408e9e2284d64a2a1f2810b39880067c982787be2fb6b47",
+    "src/app/page.tsx": "6930c7dacda5f7076bd45dd8c1b411ef883bb90c370d9f6167837aacb7b623db",
+    "src/app/sitemap.ts": "24feb17182635a6064922277d609b4771060a6565e727fa88e1f6ddfd1c9987d",
+    "src/components/experience/experience-provider.tsx": "99603fd1dfad9bbe1b89def91a2f83feff12a4ca4dcca8e990a0da990d169fc7",
+    "src/components/layout/site-header.tsx": "6e215b3855e035e4483ce4ff62a4be04a292bf81b0824cea8eb4ba93187aeee4",
+    "src/components/layout/site-footer.tsx": "44ed8246c09b90920f70ed82f6e07a0b10b371e870688b929c385177ab18be1c",
+    "src/shared/site.ts": "b49ba431e7e074794d2b5a89ea669863f3173dbf2cd337156971f78a137cc0d2",
+    "src/lib/blog.ts": "bbc7d983a40b23fc55c4f8b20fc03a15166ef6ebe6d7a87eb270206ca8351ffb",
+    "src/lib/blog-markdown.ts": "416ff8a90c3cfa675ff168a9a5b7edc6e6e857def5e26dc7ad755738aeebaddb",
+    "src/components/sections/blog-preview-section.tsx": "b8d7ddcee1167a472f57e69c1729c6085495a54e2c15d3eb18519d53116c26f7",
+    "tests/blog.test.ts": "afba3d729a515beba7dc87a5732bd803383bd6d161960a217585b3c5ddfbbee5",
+    "src/app/blog/blog.css": "8026f68c7ee36c890a2db3c0b1cc73fac486523098db733921b7b2128a395fd0",
+    "src/app/blog/layout.tsx": "3bba891e5c7f33fda8fbeacab2b8960ceba3106be2dd3ee2df7595a8ff6bc725",
+    "src/app/blog/not-found.tsx": "ea07a613a9c426a7aa98303eac3f1e9a35b74ee9d6afb31abee7b08028e5b83a",
+    "src/app/blog/page.tsx": "6320720d02372cc956962d9eb0e8d5812a84200563e862b964489f628191ee9d",
+    "src/app/blog/[slug]/page.tsx": "27221f205c90739f94856a8b0fc41172839fe521afa873a64541c84377a0ee55",
+    "src/components/blog/article-content.tsx": "907c1facf87dbaa1c0c51983afb956aa6d4676871f4b7a477e17b9d33aa0a7ca",
+    "src/components/blog/blog-components.tsx": "100649b9c70c6aaa3787f7a16636dda2dd6d0acb96579c97395af57ca1f5bfd7",
+    "public/images/blog/beginner-workout-plan-3-days.webp": "c0370bd14a8295a62074eb28d2db8ba10cfa6d4c1c4d026a2585ba1f7866a9b6",
+    "public/images/blog/fat-loss-without-muscle-loss.webp": "abb91d227fef3d8dd86b92fc64ad3029170da49db8352f061084ad5a44519eae",
+    "content/blog/source/PUBLISH-CHECKLIST.md": "2bef6023c8241182387cbf0c615b0d1764f1e79a30fb18726027b107213f2f74",
+    "content/blog/source/README-SEO.md": "f0de41e0ef760f5eff75b96147461e760f895134b7a6fc1109aef243b2c5c175",
+    "content/blog/source/seo-brief.json": "e00fe6158d87722f7f67e1ffead48de45491e21669ca59650ced50042b26519a",
+    "content/blog/source/articles/01-beginner-workout-plan-3-days.md": "f6d9232ed06703248aad77fbbc29a0bf08af1dd0b973228614ae651b39b82da7",
+    "content/blog/source/articles/02-fat-loss-without-muscle-loss.md": "0e4f735af7a55a04ef8a8d95379c8defe4e7cce77e1aac9c161d912d5611d563",
+    "content/blog/source/implementation/next-app-router-seo-example.tsx": "b2b05fe836b3262347cc510e8581307d0fe0867debff3d5a8083e0fa1aba0a2e",
+    "src/components/AdminPanel.tsx": "3bd44f3a8ae14aaba9826280481a826f75a13d6eb6701746d558be1c0e24c7e5",
+    "tests/membership-registration.integration.test.ts": "30ec7133710d73541537e97822dee541bdca028be192887fb72ba12c1a283fb0"
+  },
+  "checks": "Targeted ESLint, production build and TypeScript passed; preflight and active HTTP checks passed",
+  "inherited_validation": {
+    "release": "/srv/gym/releases/20261101T214835Z-blog-intro",
+    "tests": {
+      "release": "/srv/gym/releases/20261101T212236Z-blog",
+      "tests": "17 passed, 0 skipped, serially in disposable database; membership opt-in enabled"
+    }
+  }
+}

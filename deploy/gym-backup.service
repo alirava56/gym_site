@@ -1,0 +1,8 @@
+[Unit]
+Description=Encrypted PostgreSQL backup for gym
+After=postgresql.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /usr/local/lib/gym/backup.py
+UMask=0077

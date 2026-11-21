@@ -1,0 +1,51 @@
+{
+  "name": "shab-ghahremanan-gym",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run architecture:check && npm run lint && npm run typecheck && npm run test && npm run build",
+    "clean": "node scripts/clean.mjs",
+    "test": "node --conditions=react-server --test --import tsx tests/**/*.test.ts",
+    "test:integration": "node --conditions=react-server --test --import tsx tests/postgres.integration.test.ts tests/admin.integration.test.ts",
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:import-legacy": "node scripts/import-legacy-json.mjs",
+    "hash-password": "node scripts/hash-password.mjs",
+    "architecture:check": "node scripts/check-boundaries.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/vazirmatn": "^5.3.0",
+    "@radix-ui/react-accordion": "^1.2.20",
+    "@radix-ui/react-dialog": "^1.1.23",
+    "@radix-ui/react-slot": "^1.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "next": "16.3.4",
+    "pg": "^8.23.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.1.14"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
+    "@types/node": "^22.14.0",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.4",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.2"
+  }
+}

@@ -1,0 +1,1 @@
+import { query } from "@/server/database/pool"; import { NextResponse } from "next/server"; export const runtime="nodejs";export const dynamic="force-dynamic";export async function GET(){try{await query("SELECT 1");return NextResponse.json({status:"ok"});}catch{return NextResponse.json({status:"unavailable"},{status:503});}}

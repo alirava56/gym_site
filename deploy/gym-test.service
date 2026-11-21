@@ -1,0 +1,21 @@
+[Unit]
+Description=Champions Night isolated test site
+After=network.target postgresql.service
+Requires=postgresql.service
+[Service]
+Type=simple
+User=gymapp
+Group=gymapp
+WorkingDirectory=/srv/gym-test/current
+EnvironmentFile=/etc/gym/gym-test.env
+ExecStart=/usr/local/bin/node /srv/gym-test/current/node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3102
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/gym-test/current/.next
+UMask=0027
+[Install]
+WantedBy=multi-user.target

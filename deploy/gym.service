@@ -1,0 +1,24 @@
+[Unit]
+Description=Shab Ghahremanan Next.js
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=gymapp
+Group=gymapp
+WorkingDirectory=/srv/gym/current
+EnvironmentFile=/etc/gym/gym.env
+ExecStart=/usr/local/bin/node /srv/gym/current/node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3000
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/gym/current/.next
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,30 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { randomUUID } from "node:crypto";
+import type { Trainer } from "@/shared/catalog";
+
+test("PostgreSQL enforces concurrency, history, ownership and per-trainer slots", { skip: !process.env.DATABASE_URL }, async () => {
+  const { query, getPool, isUniqueViolation } = await import("@/server/database/pool");
+  const { createBooking, cancelOwnerBooking, listUnavailableSlots, updateBookingStatus } = await import("@/server/database/bookings");
+  const { addCalendarDays, getTehranNow, TRAINERS, weekdayForIsoDate } = await import("@/server/domain/gym");
+  await query("TRUNCATE trainer_bookings, registration_requests");
+  const arash: Trainer = TRAINERS["arash-shams"];
+  let date = addCalendarDays(getTehranNow().date, 1);
+  while (!arash.availability[weekdayForIsoDate(date)]) date = addCalendarDays(date, 1);
+  const slot = "16:00-18:00";
+  const make = (trainerId: "arash-shams" | "mobin-yazdanzadeh", ownerHash = randomUUID()) => createBooking({ trainerId, date, slotKey: slot, customerName: "کاربر آزمون", customerPhone: "09121234567", ownerHash });
+  const outcomes = await Promise.allSettled(Array.from({ length: 8 }, () => make("arash-shams")));
+  assert.equal(outcomes.filter((result) => result.status === "fulfilled").length, 1);
+  assert.equal(outcomes.filter((result) => result.status === "rejected" && isUniqueViolation(result.reason)).length, 7);
+  assert.ok(await make("mobin-yazdanzadeh"));
+  const first = (outcomes.find((result) => result.status === "fulfilled") as PromiseFulfilledResult<Awaited<ReturnType<typeof make>>>).value;
+  assert.equal(await cancelOwnerBooking(first.id, "wrong-owner"), false);
+  const owner = (await query<{ owner_hash: string }>("SELECT owner_hash FROM trainer_bookings WHERE id=$1", [first.id])).rows[0].owner_hash;
+  assert.equal(await cancelOwnerBooking(first.id, owner), true);
+  const replacement = await make("arash-shams");
+  await updateBookingStatus(replacement.id, "completed");
+  await assert.rejects(make("arash-shams"), (error) => isUniqueViolation(error));
+  assert.ok((await listUnavailableSlots("arash-shams", date)).includes(slot));
+  assert.equal((await query<{ count: string }>("SELECT count(*)::text AS count FROM trainer_bookings WHERE id=$1 AND status='completed'", [replacement.id])).rows[0].count, "1");
+  await getPool().end();
+});

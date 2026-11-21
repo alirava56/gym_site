@@ -1,0 +1,27 @@
+export const approvedIcons = {
+  brandLogo: "/assets/icons/optimized/brand-logo.webp",
+  account: "/assets/icons/optimized/account.webp",
+  professionalCoach: "/assets/icons/optimized/professional-coach.webp",
+  supportMotivation: "/assets/icons/optimized/support-motivation.webp",
+  advancedEquipment: "/assets/icons/optimized/advanced-equipment.webp",
+  weightPlate: "/assets/icons/optimized/weight-plate.webp",
+  personalizedProgram: "/assets/icons/optimized/personalized-program.webp",
+  muscleGain: "/assets/icons/optimized/muscle-gain.webp",
+  fatLoss: "/assets/icons/optimized/fat-loss.webp",
+  functionalFitness: "/assets/icons/optimized/functional-fitness.webp",
+  schedule: "/assets/icons/optimized/schedule.webp",
+  timing: "/assets/icons/optimized/timing.webp",
+  testimonial: "/assets/icons/optimized/testimonial.webp",
+  faqHelp: "/assets/icons/optimized/faq-help.webp",
+  location: "/assets/icons/optimized/location.webp",
+  phone: "/assets/icons/optimized/phone.webp",
+  email: "/assets/icons/optimized/email.webp",
+  instagram: "/assets/icons/optimized/instagram.webp",
+  telegram: "/assets/icons/optimized/telegram.webp",
+  whatsapp: "/assets/icons/optimized/whatsapp.webp",
+  planBase: "/assets/icons/optimized/plan-base.webp",
+  planProfessional: "/assets/icons/optimized/plan-professional.webp",
+  planVip: "/assets/icons/optimized/plan-vip.webp",
+} as const;
+
+export type ApprovedIconKey = keyof typeof approvedIcons;

@@ -1,0 +1,27 @@
+import "server-only";
+import { MEMBERSHIP_PLANS, TRAINERS, type MembershipPlanId, type Trainer, type TrainerId, type WeekdayKey } from "@/shared/catalog";
+import { getMembershipPackage } from "@/shared/membership-pricing";
+export const BOOKING_STATUSES = ["active", "completed", "cancelled"] as const;
+export const REGISTRATION_STATUSES = ["new", "contacted", "completed", "cancelled"] as const;
+export type BookingStatus = typeof BOOKING_STATUSES[number];
+export type RegistrationStatus = typeof REGISTRATION_STATUSES[number];
+export { MEMBERSHIP_PLANS, TRAINERS }; export type { MembershipPlanId, TrainerId };
+export const normalizePhoneDigits = (value: string) => value.trim().replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d))).replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d))).replace(/[\s()-]/g, "");
+export const isValidIranianMobile = (value: string) => /^09\d{9}$/.test(value);
+export const isMembershipPlanId = (value: unknown): value is MembershipPlanId => typeof value === "string" && Object.hasOwn(MEMBERSHIP_PLANS, value);
+export const resolveRegistrationPlan = (value: unknown) => {
+  if (isMembershipPlanId(value)) return MEMBERSHIP_PLANS[value];
+  return getMembershipPackage(value);
+};
+export const isTrainerId = (value: unknown): value is TrainerId => typeof value === "string" && value in TRAINERS;
+export const isBookingStatus = (value: unknown): value is BookingStatus => typeof value === "string" && (BOOKING_STATUSES as readonly string[]).includes(value);
+export const isRegistrationStatus = (value: unknown): value is RegistrationStatus => typeof value === "string" && (REGISTRATION_STATUSES as readonly string[]).includes(value);
+export const getRequiredText = (value: unknown, maxLength: number) => { if (typeof value !== "string") return null; const text = value.trim(); return text && text.length <= maxLength ? text : null; };
+const formatter = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tehran", year: "numeric", month: "2-digit", day: "2-digit", weekday: "long", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+const weekdayMap: Record<string, WeekdayKey> = { Saturday: "saturday", Sunday: "sunday", Monday: "monday", Tuesday: "tuesday", Wednesday: "wednesday", Thursday: "thursday", Friday: "friday" };
+export const parseIsoDate = (value: unknown) => { if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null; const [y,m,d] = value.split("-").map(Number); const date = new Date(Date.UTC(y,m-1,d)); return date.getUTCFullYear() === y && date.getUTCMonth() === m-1 && date.getUTCDate() === d ? value : null; };
+export const addCalendarDays = (iso: string, days: number) => { const [y,m,d] = iso.split("-").map(Number); return new Date(Date.UTC(y,m-1,d+days)).toISOString().slice(0,10); };
+export const getTehranNow = (now = new Date()) => { const p = Object.fromEntries(formatter.formatToParts(now).filter((part) => part.type !== "literal").map((part) => [part.type, part.value])); return { date: `${p.year}-${p.month}-${p.day}`, time: `${p.hour}:${p.minute}`, weekday: weekdayMap[p.weekday] }; };
+export const weekdayForIsoDate = (iso: string): WeekdayKey => { const [y,m,d] = iso.split("-").map(Number); return (["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const)[new Date(Date.UTC(y,m-1,d)).getUTCDay()]; };
+export type BookingValidationError = "INVALID_DATE" | "DATE_OUT_OF_RANGE" | "TRAINER_UNAVAILABLE" | "INVALID_SLOT" | "SLOT_IN_PAST";
+export const validateBookingSelection = (trainerId: TrainerId, date: string, slotKey: string, now = new Date()): BookingValidationError | null => { if (!parseIsoDate(date)) return "INVALID_DATE"; const t = getTehranNow(now); if (date < t.date || date > addCalendarDays(t.date, 13)) return "DATE_OUT_OF_RANGE"; const trainer: Trainer = TRAINERS[trainerId]; const slots = trainer.availability[weekdayForIsoDate(date)]; if (!slots?.length) return "TRAINER_UNAVAILABLE"; const slot = slots.find((item) => item.key === slotKey); if (!slot) return "INVALID_SLOT"; return date === t.date && slot.start <= t.time ? "SLOT_IN_PAST" : null; };

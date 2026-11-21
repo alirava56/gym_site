@@ -1,0 +1,207 @@
+.section {
+  scroll-margin-top: 4.5rem;
+  background: radial-gradient(ellipse at 50% 100%, #e5ad2206, transparent 65%), #0e1012;
+}
+.heading { margin-bottom: 2.75rem; text-align: center; }
+.intro { margin-top: .75rem; font-size: .875rem; line-height: 1.8; color: #a7a8aa; }
+.headingLine { display: block; width: 2.25rem; height: 2px; margin: 1.5rem auto 0; background: var(--color-brand-gold); }
+.plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; max-width: 62rem; margin-inline: auto; }
+.plan { min-width: 0; }
+.square {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  overflow: hidden;
+  border: 1px solid #343638;
+  border-radius: 1rem;
+  background: radial-gradient(ellipse at 0 0, #ffffff04, transparent 65%), linear-gradient(145deg, #1b1d20, #111315);
+  transition: border-color .2s, box-shadow .2s;
+}
+.plan:hover .square { border-color: #856522; box-shadow: 0 12px 40px #0003; }
+.familySquare { border-color: #76591f; background: radial-gradient(ellipse at 0 0, #e5ad220d, transparent 65%), linear-gradient(145deg, #1c1d1d, #141514); }
+.cardTop { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.icon { display: grid; place-items: center; width: 3.5rem; height: 3.5rem; flex-shrink: 0; border: 1px solid #e5ad2226; border-radius: 1rem; background: linear-gradient(145deg, #e5ad2214, #e5ad2205); color: var(--color-brand-gold); }
+.icon svg { width: 1.65rem; height: 1.65rem; stroke-width: 1.5; }
+.audience { border: 1px solid #3a3b3b; border-radius: 2rem; padding: .35rem .7rem; font-size: .65rem; color: #b7b8ba; }
+.familySquare .audience { border-color: #e5ad2233; color: #e9bd58; background: #e5ad2208; }
+.cardTitle { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.4rem; }
+.cardTitle h3 { font-size: clamp(1.3rem, 2.4vw, 1.8rem); font-weight: 900; letter-spacing: -.035em; }
+.cardTitle > span { color: #737577; font-size: .68rem; letter-spacing: .2em; font-weight: 600; }
+.description { min-height: 3.4rem; margin-top: .6rem; color: #a7a8aa; font-size: .8rem; line-height: 1.9; }
+.benefits { display: flex; flex-direction: column; gap: .65rem; border-top: 1px solid #ffffff0d; margin-top: .8rem; padding-top: 1.15rem; }
+.benefits li { display: flex; align-items: center; gap: .65rem; color: #d4d5d5; font-size: .8rem; line-height: 1.7; }
+.benefits svg { width: 1rem; height: 1rem; flex-shrink: 0; color: var(--color-brand-gold); stroke-width: 1.75; }
+.cardNote { display: flex; align-items: center; gap: .5rem; margin-top: auto; padding-top: 1rem; color: #949697; font-size: .65rem; line-height: 1.8; }
+.noteDot { display: inline-block; width: .3rem; height: .3rem; flex-shrink: 0; border-radius: 50%; background: var(--color-brand-gold); }
+.chooseButton { width: 100%; height: 3.25rem; margin-top: 1rem; justify-content: space-between; padding-inline: 1.25rem; border-radius: .75rem; }
+.sectionNote { margin: 1.75rem auto 0; text-align: center; font-size: .72rem; line-height: 1.9; color: #949697; }
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  width: min(calc(100% - 3rem), 66rem);
+  max-width: 66rem;
+  max-height: min(90dvh, 56rem);
+  overflow: hidden;
+  padding: 0;
+  border-color: #5b4926;
+  background: #121416;
+}
+.dialogHeader { flex-shrink: 0; padding: 1.8rem 2rem 1.4rem 4rem; background: radial-gradient(ellipse at 100% 0, #e5ad220a, transparent 70%); }
+.dialogEyebrow { display: flex; align-items: center; gap: .5rem; font-size: .7rem; font-weight: 700; color: #d1ac56; }
+.dialogEyebrow svg { width: 1rem; height: 1rem; }
+.dialogEyebrow > span { margin-inline-start: .35rem; padding-inline-start: .75rem; border-inline-start: 1px solid #5d4b2a; font-size: .6rem; letter-spacing: .15em; color: #8b8066; }
+.dialogTitle { margin-top: .8rem; font-size: 1.45rem; font-weight: 900; }
+.dialogDescription { margin-top: .5rem; font-size: .8rem; line-height: 1.9; color: #a7a8aa; }
+.sessionControls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-shrink: 0; padding: 1rem 2rem; border-block: 1px solid var(--color-brand-line); background: #191b1d; }
+.sessionLabel { display: flex; align-items: center; gap: .6rem; font-size: .8rem; font-weight: 700; color: #d3d4d5; }
+.sessionLabel svg { width: 1rem; height: 1rem; color: #ad9a72; }
+.sessionOptions { display: flex; gap: .3rem; border: 1px solid #303235; padding: .3rem; border-radius: .75rem; background: #101214; }
+.sessionOptions button { min-width: 6.25rem; min-height: 2.75rem; padding: .45rem .75rem; border: 1px solid transparent; border-radius: .45rem; color: #b2b3b5; font-size: .75rem; cursor: pointer; transition: background .15s, color .15s; }
+.sessionOptions button strong { font-size: .95rem; font-weight: 800; }
+.sessionOptions button:hover { background: #ffffff08; color: #fff; }
+.sessionOptions button[aria-pressed="true"] { border-color: #e5ad2240; background: #e5ad22; color: #101214; }
+.pricingBody { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1.4rem 2rem; scrollbar-width: thin; scrollbar-color: #62502c #121416; }
+.tableSummary { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; font-size: .72rem; line-height: 1.8; }
+.tableSummary p { color: #d3d4d5; font-weight: 600; }
+.tableSummary p > span { padding-inline: .3rem; color: #5d5f62; }
+.tableSummary > span { font-size: .65rem; color: #949697; }
+.desktopTable { overflow: hidden; border: 1px solid #303235; border-radius: .8rem; }
+.priceTable { width: 100%; border-collapse: collapse; text-align: right; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.priceTable thead { background: #202224; }
+.priceTable thead th { padding: 1rem .8rem; font-size: .66rem; font-weight: 500; color: #aeb0b2; white-space: nowrap; }
+.priceTable td, .priceTable tbody th { padding: 1rem .8rem; border-top: 1px solid #292b2e; white-space: nowrap; }
+.priceTable tbody th { font-size: .78rem; font-weight: 700; }
+.priceTable tbody tr { transition: background .15s; }
+.priceTable tbody tr:hover { background: #ffffff04; }
+.priceTable .sessionCell { color: #949697; }
+.basePrice { color: #a7a8aa; }
+.discount { color: #d9b867; }
+.finalPrice { color: #f2cc75; font-weight: 900; font-size: .9rem; }
+.priceTable .annualRow { background: #e5ad2209; }
+.priceTable .annualRow td, .priceTable .annualRow th { border-top-color: #58451f; }
+.mobilePackages { display: none; }
+.freezeNote { display: flex; align-items: flex-start; gap: .5rem; margin-top: 1.15rem; font-size: .68rem; line-height: 1.9; color: #9b9d9f; }
+.freezeNote svg { width: .9rem; height: .9rem; flex-shrink: 0; margin-top: .15rem; color: #b6a273; }
+.dialogFooter { display: flex; align-items: center; justify-content: center; gap: .5rem; flex-shrink: 0; padding: 1rem 1.25rem; border-top: 1px solid var(--color-brand-line); font-size: .7rem; line-height: 1.8; color: #a7a8aa; background: #17191b; }
+.steps { display: flex; align-items: center; gap: .75rem; margin-top: 1rem; font-size: .7rem; color: #85888a; }
+.steps svg { width: .9rem; height: .9rem; color: #626568; }
+.steps [aria-current="step"] { color: #e9bd58; font-weight: 800; }
+.pricingStep, .registrationStep, .registrationForm { display: flex; min-height: 0; flex-direction: column; }
+.pricingStep[hidden], .registrationStep[hidden] { display: none; }
+.priceTable td:last-child { padding-inline: .5rem .8rem; }
+.selectPackage { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.75rem; padding: .45rem .8rem; border: 1px solid #79602c; border-radius: .5rem; color: #f2cc75; background: #e5ad2208; font-size: .72rem; font-weight: 800; cursor: pointer; transition: background .15s, color .15s; }
+.selectPackage:hover { background: #e5ad22; color: #101214; }
+.selectPackage svg { width: .9rem; height: .9rem; }
+.registrationBody { min-height: 0; padding: 1.5rem 2rem; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #62502c #121416; }
+.selectionSummary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; padding: 1.25rem; border: 1px solid #705521; border-radius: .8rem; background: linear-gradient(120deg, #e5ad220c, #191b1d); }
+.summaryLabel { color: #b7a479; font-size: .65rem; }
+.selectionSummary h3 { margin-top: .4rem; font-size: 1rem; font-weight: 900; }
+.summarySessions { margin-top: .4rem; font-size: .75rem; color: #b4b6b8; }
+.summaryPrice { text-align: left; }
+.summaryPrice > span { font-size: .65rem; color: #acadaf; }
+.summaryPrice p { margin-top: .3rem; font-size: .7rem; color: #c4c5c6; }
+.summaryPrice strong { color: #f2cc75; font-size: 1.35rem; font-weight: 900; }
+.summaryPrice .discount { display: block; margin-top: .3rem; color: #d9b867; }
+.registrationGrid { display: grid; min-width: 0; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 1.5rem; }
+.registrationInputs { display: flex; min-width: 0; flex-direction: column; gap: 1.25rem; }
+.visitNote { display: flex; align-items: flex-start; gap: .5rem; margin-top: .25rem; padding: 1rem; border-radius: .6rem; background: #ffffff03; font-size: .7rem; line-height: 2; color: #a7a8aa; }
+.visitNote svg { flex-shrink: 0; width: 1rem; height: 1rem; margin-top: .15rem; color: #b7a479; }
+.registrationActions { display: flex; justify-content: space-between; gap: .75rem; flex-shrink: 0; padding: 1rem 2rem; border-top: 1px solid var(--color-brand-line); background: #17191b; }
+.registrationActions > button:last-child { margin-inline-start: auto; min-width: 12rem; }
+
+@media (min-width: 901px) and (max-width: 1050px) {
+  .square { padding: 1.35rem; }
+  .icon { width: 2.75rem; height: 2.75rem; border-radius: .8rem; }
+  .cardTitle { margin-top: 1rem; }
+  .description { font-size: .72rem; min-height: 3.1rem; }
+  .benefits { gap: .4rem; margin-top: .5rem; padding-top: .8rem; }
+  .benefits li { font-size: .73rem; }
+  .cardNote { font-size: .6rem; padding-top: .75rem; }
+}
+@media (max-width: 1000px) {
+  .dialog { width: min(calc(100% - 2rem), 44rem); }
+  .dialogHeader { padding: 1.4rem 1.25rem 1.1rem 3.5rem; }
+  .sessionControls { padding: .9rem 1.25rem; }
+  .pricingBody { padding: 1.15rem 1.25rem; }
+  .desktopTable { display: none; }
+  .mobilePackages { display: grid; gap: .75rem; }
+  .package { border: 1px solid #303235; border-radius: .75rem; background: #191b1d; padding: 1rem; }
+  .annualPackage { border-color: #715522; background: linear-gradient(135deg, #e5ad220a, #191b1d); }
+  .packageTop { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+  .packageTop h3 { font-size: .85rem; font-weight: 800; }
+  .packagePrice { text-align: left; }
+  .originalPrice { display: block; min-height: 1.2rem; margin-bottom: .2rem; color: #939698; font-size: .7rem; }
+  .packagePrice strong { color: #f2cc75; font-size: 1.1rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .packagePrice p > span:not(:global(.sr-only)) { color: #a7a8aa; font-size: .6rem; }
+  .packageDetails { display: grid; gap: .6rem; margin-top: .9rem; padding-top: .85rem; border-top: 1px solid #ffffff0a; font-size: .68rem; }
+  .packageDetails > div { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+  .packageDetails dt { display: flex; align-items: center; gap: .4rem; color: #a7a8aa; }
+  .packageDetails svg { width: .9rem; height: .9rem; color: #9b8a67; }
+  .packageDetails dd { font-weight: 600; }
+  .package .selectPackage { width: 100%; margin-top: 1rem; }
+  .registrationGrid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .registrationBody { padding: 1.25rem; }
+  .registrationActions { padding: 1rem 1.25rem; }
+}
+@media (max-width: 900px) {
+  .heading { margin-bottom: 2rem; }
+  .plans { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; max-width: 29rem; }
+  .square { padding: clamp(1.15rem, 5.5vw, 2.25rem); }
+  .cardTitle { margin-top: 1.15rem; }
+  .cardTitle h3 { font-size: 1.5rem; }
+  .chooseButton { margin-top: .75rem; }
+}
+@media (max-width: 480px) {
+  .plans { margin-inline: .35rem; }
+  .icon { width: 2.75rem; height: 2.75rem; border-radius: .8rem; }
+  .icon svg { width: 1.4rem; height: 1.4rem; }
+  .cardTitle { margin-top: .9rem; }
+  .cardTitle h3 { font-size: 1.35rem; }
+  .description { min-height: 3rem; margin-top: .4rem; font-size: .72rem; }
+  .benefits { margin-top: .5rem; padding-top: .8rem; gap: .45rem; }
+  .benefits li { font-size: .72rem; }
+  .cardNote { font-size: .6rem; padding-top: .7rem; }
+  .audience { font-size: .6rem; padding: .3rem .6rem; }
+  .dialog { width: calc(100% - 1rem); max-height: calc(100dvh - 1rem); border-radius: 1rem; }
+  .dialogTitle { font-size: 1.2rem; }
+  .dialogDescription { font-size: .72rem; }
+  .sessionControls { align-items: stretch; flex-direction: column; gap: .75rem; padding: .9rem 1rem; }
+  .sessionLabel { font-size: .72rem; }
+  .sessionOptions button { flex: 1; min-width: 0; }
+  .pricingBody { padding: 1rem; }
+  .tableSummary { align-items: flex-start; flex-direction: column; gap: .2rem; }
+  .dialogFooter { font-size: .63rem; padding: .85rem .75rem; }
+  .steps { font-size: .65rem; gap: .5rem; margin-top: .85rem; }
+  .registrationBody { padding: 1rem; }
+  .selectionSummary { align-items: flex-start; flex-direction: column; gap: 1rem; padding: 1rem; margin-bottom: 1.25rem; }
+  .summaryPrice { width: 100%; text-align: right; padding-top: .8rem; border-top: 1px solid #ffffff0d; }
+  .summaryPrice strong { font-size: 1.25rem; }
+  .registrationActions { padding: .8rem 1rem; }
+  .registrationActions > button { flex: 1; padding-inline: .6rem; font-size: .7rem; }
+  .registrationActions > button:last-child { min-width: 0; }
+}
+@media (max-width: 360px) {
+  .plans { margin-inline: 0; }
+  .square { padding: 1rem; }
+  .icon { width: 2.35rem; height: 2.35rem; }
+  .cardTitle { margin-top: .7rem; }
+  .description { min-height: 2.8rem; font-size: .66rem; }
+  .benefits { padding-top: .65rem; gap: .35rem; }
+  .benefits li { font-size: .68rem; }
+  .cardNote { font-size: .55rem; padding-top: .6rem; }
+  .package { padding: .8rem; }
+  .packagePrice strong { font-size: .95rem; }
+}
+@media (max-width: 340px) {
+  .icon { width: 2rem; height: 2rem; }
+  .cardTitle { margin-top: .5rem; }
+  .cardTitle h3 { font-size: 1.2rem; }
+  .description { min-height: 2.5rem; }
+  .benefits { margin-top: .35rem; padding-top: .5rem; gap: .3rem; }
+  .cardNote { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .square, .sessionOptions button, .priceTable tbody tr { transition: none; }
+}
