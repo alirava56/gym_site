@@ -4,13 +4,9 @@
 
 ## 📸 پیش‌نمایش
 
-### دسکتاپ
-
-![صفحهٔ اصلی باشگاه در دسکتاپ](./docs/preview/desktop.png)
-
-### موبایل
-
-![صفحهٔ اصلی باشگاه در موبایل](./docs/preview/mobile.png)
+| دسکتاپ | موبایل |
+| :---: | :---: |
+| <img src="./docs/preview/desktop.png" width="650" alt="صفحهٔ اصلی باشگاه در دسکتاپ"> | <img src="./docs/preview/mobile.png" width="160" alt="صفحهٔ اصلی باشگاه در موبایل"> |
 
 ## امکانات
 
